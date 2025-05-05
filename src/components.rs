@@ -2,7 +2,7 @@ use bevy::prelude::*;
 
 #[derive(Component, Debug, Clone,Copy)]
 
-pub struct TestComponent {
+pub struct TestRenderComponent {
     pub col : Color,
     pub x : f32,
     pub y : f32,

@@ -3,7 +3,7 @@ use std::collections::HashMap;
 
 use bevy::ecs::entity::EntityHashSet;
 use bevy::ecs::prelude::*;
-use bevy::math::{FloatOrd, Mat4, URect, UVec4, };
+use bevy::math::{FloatOrd, Mat4, UVec4, };
 use bevy::prelude::{Camera, Camera2d, Camera3d, GlobalTransform};
 use bevy::window::{Window,PrimaryWindow};
 
@@ -35,7 +35,8 @@ pub fn extract_default_ui_camera_view(
 
     live_entities.clear();
 
-    let scale = 1.0;//ui_scale.0.recip();
+    // let scale = 1.0;//ui_scale.0.recip();
+
     for (entity, camera) in &query {
         // ignore inactive cameras
         if !camera.is_active {
@@ -44,21 +45,33 @@ pub fn extract_default_ui_camera_view(
             continue;
         }
 
-        if let (Some(logical_size),Some(URect {min: physical_origin,..}), Some(physical_size),) = (
-            camera.logical_viewport_size(),
-            camera.physical_viewport_rect(),
-            camera.physical_viewport_size(),
-        ) {
-            let projection_matrix = Mat4::orthographic_rh(0.0, logical_size.x * scale, logical_size.y * scale, 0.0, 0.0, UI_CAMERA_FAR,);
-            let default_camera_view = commands
-                .spawn((ExtractedView {
-                    clip_from_view: projection_matrix,
-                    world_from_view: GlobalTransform::from_xyz(0.0, 0.0, UI_CAMERA_FAR + UI_CAMERA_TRANSFORM_OFFSET,),
-                    clip_from_world: None,
-                    hdr: camera.hdr,
-                    viewport: UVec4::new( physical_origin.x, physical_origin.y, physical_size.x, physical_size.y, ),
-                    color_grading: Default::default(),
-                },TemporaryRenderEntity)).id();
+        // if let (Some(logical_size),Some(URect {min: physical_origin,..}), Some(physical_size),) = (
+        //     camera.logical_viewport_size(),
+        //     camera.physical_viewport_rect(),
+        //     camera.physical_viewport_size(),
+        // )
+
+        if let Some(physical_viewport_rect) = camera.physical_viewport_rect()
+        {
+            let projection_matrix = Mat4::orthographic_rh(
+                0.0,
+                // logical_size.x * scale,
+                // logical_size.y * scale,
+                physical_viewport_rect.width() as f32,
+                physical_viewport_rect.height() as f32,
+                0.0,
+                0.0, UI_CAMERA_FAR,
+            );
+
+            let default_camera_view = commands.spawn((ExtractedView {
+                clip_from_view: projection_matrix,
+                world_from_view: GlobalTransform::from_xyz(0.0, 0.0, UI_CAMERA_FAR + UI_CAMERA_TRANSFORM_OFFSET,),
+                clip_from_world: None,
+                hdr: camera.hdr,
+                // viewport: UVec4::new( physical_origin.x, physical_origin.y, physical_size.x, physical_size.y, ),
+                viewport: UVec4::from(( physical_viewport_rect.min, physical_viewport_rect.size(), )),
+                color_grading: Default::default(),
+            },TemporaryRenderEntity)).id();
 
             let mut entity_commands = commands.get_entity(entity).expect("Camera entity wasn't synced.");
             entity_commands.insert(MyCameraView(default_camera_view));
@@ -74,7 +87,7 @@ pub fn extract_default_ui_camera_view(
 pub fn extract_uinodes(
     windows: Extract<Query<&Window, With<PrimaryWindow>>>,
     mut commands: Commands,
-    uinode_query: Extract<Query<(Entity,&TestComponent,)> >,
+    uinode_query: Extract<Query<(Entity,&TestRenderComponent,)> >,
     mut extracted_elements : ResMut<MyUiExtractedElements>,
     default_ui_camera: Extract<MyDefaultUiCamera>,
     mapping: Extract<Query<RenderEntity>>,
