@@ -15,7 +15,7 @@ pub struct MyViewBindGroup {
 }
 
 #[derive(Component)]
-pub struct MyDefaultCameraView(pub Entity);
+pub struct MyCameraView(pub Entity);
 
 #[derive(Component, Clone, Debug, Reflect, Eq, PartialEq)]
 pub struct MyTargetCamera(pub Entity);

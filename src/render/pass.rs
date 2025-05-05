@@ -10,7 +10,7 @@ use super::phase::*;
 
 pub struct MyUiPassNode {
     ui_view_query: QueryState<(&'static ViewTarget, &'static ExtractedCamera), With<ExtractedView>>,
-    default_camera_view_query: QueryState<&'static MyDefaultCameraView>,
+    default_camera_view_query: QueryState<&'static MyCameraView>,
 }
 
 impl MyUiPassNode {

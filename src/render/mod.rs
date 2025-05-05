@@ -46,7 +46,9 @@ pub fn setup(app: &mut bevy::app::App) {
         )) ;
 
     shaders::setup_shaders(app);
-    graphs::setup_graph2d(app);
-    graphs::setup_graph3d(app);
+
+    let render_app = app.get_sub_app_mut(RenderApp).unwrap();
+    graphs::setup_graph2d(render_app);
+    graphs::setup_graph3d(render_app);
 }
 

@@ -41,7 +41,7 @@ pub fn extract_default_ui_camera_view(
         // ignore inactive cameras
         if !camera.is_active {
             let mut entity_commands = commands.get_entity(entity).expect("Camera entity wasn't synced.");
-            entity_commands.remove::<MyDefaultCameraView>();
+            entity_commands.remove::<MyCameraView>();
             continue;
         }
 
@@ -62,7 +62,7 @@ pub fn extract_default_ui_camera_view(
                 },TemporaryRenderEntity)).id();
 
             let mut entity_commands = commands.get_entity(entity).expect("Camera entity wasn't synced.");
-            entity_commands.insert(MyDefaultCameraView(default_camera_view));
+            entity_commands.insert(MyCameraView(default_camera_view));
             transparent_render_phases.insert_or_clear(entity);
 
             live_entities.insert(entity);
