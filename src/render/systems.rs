@@ -5,16 +5,14 @@ use bevy::ecs::entity::EntityHashSet;
 use bevy::ecs::prelude::*;
 use bevy::math::{FloatOrd, Mat4, URect, UVec4, };
 use bevy::prelude::{Camera, Camera2d, Camera3d, GlobalTransform};
-use bevy::render::sync_world::{RenderEntity, TemporaryRenderEntity};
 use bevy::window::{Window,PrimaryWindow};
 
 use bevy::render::Extract;
 use bevy::render::render_resource::*;
 use bevy::render::render_phase::{DrawFunctions, PhaseItemExtraIndex, ViewSortedRenderPhases};
+use bevy::render::sync_world::{RenderEntity, TemporaryRenderEntity};
 use bevy::render::renderer::*;
 use bevy::render::view::*;
-
-use crate::TestComponent;
 
 use super::draw::*;
 use super::phase::*;
@@ -22,6 +20,7 @@ use super::pipeline::*;
 use super::resources::*;
 use super::components::*;
 use super::camera::*;
+use super::super::components::*;
 
 pub fn extract_default_ui_camera_view(
     mut commands: Commands,

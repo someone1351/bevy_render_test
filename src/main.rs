@@ -3,8 +3,7 @@ use std::collections::HashSet;
 
 use bevy::prelude::*;
 
-use render_test::TestComponent;
-use render_test::TestRenderPlugin as TestRenderPlugin;
+use render_test::{TestComponent,TestRenderPlugin};
 
 fn main() {
     let mut app = App::new();

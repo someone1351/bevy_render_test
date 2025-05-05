@@ -1,9 +1,11 @@
 
 use bevy::math::FloatOrd;
 use bevy::prelude::*;
+
 use bevy::render::render_phase::*;
 use bevy::render::render_resource::CachedRenderPipelineId;
 use bevy::render::sync_world::MainEntity;
+
 use core::ops::Range;
 
 pub struct MyTransparentUi {
@@ -45,9 +47,9 @@ impl PhaseItem for MyTransparentUi {
     fn batch_range_and_extra_index_mut(&mut self) -> (&mut Range<u32>, &mut PhaseItemExtraIndex) {
         (&mut self.batch_range, &mut self.extra_index)
     }
-    
+
     fn main_entity(&self) -> MainEntity {
-        MainEntity::from(Entity::PLACEHOLDER) 
+        MainEntity::from(Entity::PLACEHOLDER)
     }
 }
 

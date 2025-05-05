@@ -1,8 +1,6 @@
 
-use bevy::color::Color;
 use bevy::prelude::*;
 use bevy::render::render_resource::{BufferUsages, RawBufferVec};
-
 
 #[repr(C)]
 #[derive(Copy, Clone, bytemuck::Pod, bytemuck::Zeroable)]

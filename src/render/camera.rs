@@ -1,4 +1,8 @@
-use bevy::{ecs::system::SystemParam, prelude::*, render::camera::RenderTarget, window::{PrimaryWindow, WindowRef}};
+
+use bevy::prelude::*;
+use bevy::ecs::system::SystemParam;
+use bevy::render::camera::RenderTarget;
+use bevy::window::{PrimaryWindow, WindowRef};
 
 #[derive(Component)]
 pub struct MyIsDefaultUiCamera;

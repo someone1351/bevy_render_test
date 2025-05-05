@@ -1,4 +1,4 @@
-use bevy::{color::Color, ecs::prelude::*};
+use bevy::prelude::*;
 
 #[derive(Component, Debug, Clone,Copy)]
 

@@ -1,5 +1,5 @@
 
-use bevy::reflect::Reflect;
+
 use bevy::render::render_resource::BindGroup;
 use bevy::ecs::prelude::*;
 use core::ops::Range;
@@ -17,5 +17,5 @@ pub struct MyViewBindGroup {
 #[derive(Component)]
 pub struct MyCameraView(pub Entity);
 
-#[derive(Component, Clone, Debug, Reflect, Eq, PartialEq)]
+#[derive(Component, Clone, Debug, Eq, PartialEq)]
 pub struct MyTargetCamera(pub Entity);
